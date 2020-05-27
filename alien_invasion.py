@@ -1,6 +1,7 @@
 import sys
 import pygame
 from alien import Alien
+from game_stats import GameStats
 from pygame.sprite import Group
 from settings import Setting
 from ship import Ship
@@ -18,7 +19,8 @@ def run_game():
         )
     )
 
-    pygame.display.set_caption("Alien Invasion")
+    pygame.display.set_caption("正道 德 光")
+    stats = GameStats(ai_settings)
 
     # 创建一艘飞船
     ship = Ship(ai_settings, screen)
@@ -36,9 +38,12 @@ def run_game():
     while True:
         # 监视键盘和鼠标事件
         gf.check_events(ship, ai_settings, screen, bullets)
-        ship.update()
-        gf.update_bullets(ai_settings, screen, ship, aliens, bullets)
-        gf.update_aliens(ai_settings, aliens)
+
+        if stats.game_active:
+            ship.update()
+            gf.update_bullets(ai_settings, screen, ship, aliens, bullets)
+            gf.update_aliens(ai_settings, stats, screen, ship, aliens, bullets)
+
         gf.update_screen(ai_settings, screen, ship, aliens, bullets)
 
 
