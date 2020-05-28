@@ -12,14 +12,16 @@ class Scoreboard:
         self.stats = stats
 
         # 显示得分信息时使用的字体设置
-
         self.text_color = (30, 30, 30)
-        self.font = pygame.font.SysFont('arial', 48)
+        self.font = pygame.font.SysFont('arial', 24)
         # 准备初始得分图像
         self.prep_score()
         # 最高得分的图像
         self.prep_high_score()
         self.prep_level()
+
+        # 记录各个兄弟吃屎数
+        self.eat_shit()
 
     def prep_score(self):
         """将得分转换为一幅渲染的图像"""
@@ -39,6 +41,9 @@ class Scoreboard:
         self.screen.blit(self.score_image, self.score_rect)
         self.screen.blit(self.high_score_image, self.high_score_rect)
         self.screen.blit(self.level_image, self.level_rect)
+        self.screen.blit(self.eat_shit1, self.eat_shit1_rect)
+        self.screen.blit(self.eat_shit2, self.eat_shit2_rect)
+        self.screen.blit(self.eat_shit3, self.eat_shit3_rect)
 
     def prep_high_score(self):
         """将最高得分转换为渲染的图像"""
@@ -63,3 +68,33 @@ class Scoreboard:
 
         self.level_rect.right = self.score_rect.right
         self.level_rect.top = self.score_rect.bottom + 10
+
+    def eat_shit(self):
+        """将吃屎数目转化"""
+        """博吃屎数"""
+        # self.score_image = self.font.render(score_str, True, self.text_color,
+        #                                     self.ai_settings.bg_color)
+        self.eat_shit1 = self.font.render('bo:' + str(self.stats.eat_shit1), True,
+                                          self.text_color, self.ai_settings.bg_color)
+        """迪吃屎数"""
+        self.eat_shit2 = self.font.render('di: ' + str(self.stats.eat_shit2), True,
+                                          self.text_color, self.ai_settings.bg_color)
+        """鹏吃屎数"""
+        self.eat_shit3 = self.font.render('peng: ' + str(self.stats.eat_shit3), True,
+                                          self.text_color, self.ai_settings.bg_color)
+
+        # 将等级放在得分下方
+        self.eat_shit1_rect = self.eat_shit1.get_rect()
+        # 将等级放在得分下方
+        self.eat_shit2_rect = self.eat_shit2.get_rect()
+        # 将等级放在得分下方
+        self.eat_shit3_rect = self.eat_shit3.get_rect()
+
+        self.eat_shit1_rect.left = self.score_rect.left - 900
+        self.eat_shit1_rect.top = 20
+
+        self.eat_shit2_rect.left = self.score_rect.left - 800
+        self.eat_shit2_rect.top = 20
+
+        self.eat_shit3_rect.left = self.score_rect.left - 700
+        self.eat_shit3_rect.top = 20

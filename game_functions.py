@@ -48,6 +48,7 @@ def check_play_button(stats, play_button, mouse_x, mouse_y,
         sb.prep_score()
         sb.prep_high_score()
         sb.prep_level()
+        sb.eat_shit()
 
         # 清空外星人列表he子弹列表
         aliens.empty()
@@ -59,7 +60,7 @@ def check_play_button(stats, play_button, mouse_x, mouse_y,
 
 
 def check_events(ship, ai_settings, screen, bullets,
-                 play_button, stats, aliens,sb):
+                 play_button, stats, aliens, sb):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
@@ -127,6 +128,19 @@ def check_bullet_alien_collisions(ai_settings, screen, ship, aliens, bullets,
         for aliens in collisions.values():
             stats.score += ai_settings.alien_points * len(aliens)
             sb.prep_score()
+            # 判断是谁在吃屎
+            # pics = ('n_bo.jpg', 'n_di.jpg', 'n_peng.jpg')
+            # self.eat_shit1 = 0  # bo
+            # self.eat_shit2 = 0  # di
+            # self.eat_shit3 = 0  # peng
+            for alien in aliens:
+                if alien.name == 'n_bo.jpg':
+                    stats.eat_shit1 += 1
+                elif alien.name == 'n_di.jpg':
+                    stats.eat_shit2 += 1
+                elif alien.name == 'n_peng.jpg':
+                    stats.eat_shit3 += 1
+                sb.eat_shit()
 
     check_high_score(stats, sb)
 
